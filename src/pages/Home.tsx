@@ -452,7 +452,7 @@ useEffect(() => {
           </div>
         </aside>
 
-
+        {/* Sepet */}
         <div className="wrap-header-cart js-panel-cart">
           <div className="s-full js-hide-cart"></div>
 
@@ -490,13 +490,7 @@ useEffect(() => {
                     </li>
                   )) : null
                 }
-                
-
-                
-
-                
               </ul>
-              
               <div className="w-full">
                 <div className="header-cart-total w-full p-tb-40">
                   Toplam Tutar: { totalAmount }  TL
