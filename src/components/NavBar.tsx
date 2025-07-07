@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useCart } from '../context/CartContext'
+import { useProduct } from '../context/ProductContext'
+import { Link } from 'react-router-dom'
 
 const NavBar = () => {
     const { toggleCart } = useCart()
+    const { searchedProducts } = useProduct()
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const [productSearch, setProductSearch] = useState("")
 
@@ -61,12 +64,12 @@ const NavBar = () => {
                                 <li className="active-menu">
                                 <a href="index.html">Home</a>
                                 <ul className="sub-menu">
-                                    <li><a href="index.html">Homepage 1</a></li>
-                                    <li><a href="home-02.html">Homepage 2</a></li>
-                                    <li><a href="home-03.html">Homepage 3</a></li>
+                                    <li><Link to="/">Anasayfa</Link></li>
+                                    <li><Link to="/products">Ürünler</Link></li>
                                 </ul>
                                 </li>
-
+                                <li><Link to="/">Anasayfa</Link></li>
+                                <li><Link to="/products">Ürünler</Link></li>
                                 {/* <li>
                                 <a href="product.html">Shop</a>
                                 </li>
@@ -91,7 +94,9 @@ const NavBar = () => {
 
                             <div className="wrap-icon-header flex-w flex-r-m h-full">
                                 <div className="flex-c-m h-full p-r-24">
-                                    <div className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search">
+                                    <div 
+                                        className="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-modal-search"
+                                    >
                                         <i className="zmdi zmdi-search"></i>
                                     </div>
                                 </div>
@@ -191,11 +196,20 @@ const NavBar = () => {
                             <img src="images/icons/icon-close2.png" alt="CLOSE" />
                         </button>
 
-                        <form className="wrap-search-header flex-w p-l-15">
+                        <form 
+                            className="wrap-search-header flex-w p-l-15"
+                            onSubmit={(e) => {
+                                e.preventDefault(); // Sayfa yenilemeyi engelle
+                                const params = new URLSearchParams();
+                                params.append('search', productSearch); // veya 'ürün 1' gibi sabit bir şey
+                                searchedProducts(params);
+                            }}
+                        >
                             <button className="flex-c-m trans-04">
                                 <i className="zmdi zmdi-search"></i>
                             </button>
-                            <input 
+
+                            <input
                                 className="plh3" 
                                 type="text" 
                                 name="search" 
@@ -203,6 +217,7 @@ const NavBar = () => {
                                 value={productSearch} 
                                 onChange={(e) => setProductSearch(e.target.value)} 
                             />
+                            
                         </form>
                     </div>
                 </div>

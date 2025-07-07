@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import $ from 'jquery';
 import 'magnific-popup';
 import { Product, CardItem } from '../models';
 import NavBar from '../components/NavBar';
 import { useCart } from '../context/CartContext';
+import { useProduct } from '../context/ProductContext';
 interface TotalCartAmountDto {
   totalCartAmount: number;
 }
@@ -15,7 +16,8 @@ type AddToCartParams = {
 }
 const Home = () => {
   const { totalAmount, cartItems, total, setTotalAmount, setCartItems, setTotal, order, getTotalAmount } = useCart()
-  const [products, setProducts] = useState<Product[]>([])
+  const { products, setProducts } = useProduct()
+  // const [products, setProducts] = useState<Product[]>([])
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
@@ -135,7 +137,7 @@ const Home = () => {
         <NavBar />
         
 
-      {/* Sepet */}
+        {/* Sepet */}
         <div className="wrap-header-cart js-panel-cart">
           <div className="s-full js-hide-cart"></div>
 
@@ -884,7 +886,7 @@ const Home = () => {
                                       email: "ali@gmail.com", // burada kullanıcıya özel olabilir
                                       productId: selectedProduct.productID,
                                       quantity: quantity
-                                    });
+                                    })
                                   }
                                 }}
                               >

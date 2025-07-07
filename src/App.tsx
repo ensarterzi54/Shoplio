@@ -1,10 +1,13 @@
 import AppRoutes from './routes'
 import { CartProvider } from './context/CartContext'
+import { ProductProvider } from './context/ProductContext'
 
 const App = () => {
   return (
     <CartProvider>
-      <AppRoutes />
+      <ProductProvider>
+        <AppRoutes />
+      </ProductProvider>
     </CartProvider>
   )
 }
