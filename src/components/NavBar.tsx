@@ -56,7 +56,7 @@ const NavBar = () => {
                         <nav className="limiter-menu-desktop p-l-45">
                             
                             <a href="#" className="logo">
-                            <img src="images/icons/logo-01.png" alt="IMG-LOGO" />
+                                <img src="/images/icons/logo-01.png" alt="IMG-LOGO" />
                             </a>
 
                             <div className="menu-desktop">
