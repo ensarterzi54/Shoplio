@@ -15,7 +15,7 @@ type AddToCartParams = {
   quantity: number;
 }
 const Home = () => {
-  const { totalAmount, cartItems, total, setTotalAmount, setCartItems, setTotal, order, getTotalAmount } = useCart()
+  const { totalAmount, cartItems, total, setTotalAmount, setCartItems, setTotal, order, getTotalAmount, removeFromCart } = useCart()
   const { products, setProducts } = useProduct()
   // const [products, setProducts] = useState<Product[]>([])
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -31,7 +31,9 @@ const Home = () => {
     setQuantity(prev => (prev > 1 ? prev - 1 : 1))
   };
 
-  
+  const examine = (product: Product) => {
+    setSelectedProduct(product);
+  }
 
   const addToCard = async ({ email, productId, quantity }: AddToCartParams) => {
     try {
@@ -65,9 +67,31 @@ const Home = () => {
     }
   };
 
-  
+  const run = async (product: string) => {
+    try {
+      const res = await fetch('https://localhost:7164/api/ollama/ask', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ "prompt": product }),
+      });
+
+      if (!res.ok) {
+        const error = await res.text();
+        throw new Error(error);
+      }
+
+      const data = await res.json();
+      console.log('API yanıtı:', data);
+      console.log('API yanıtı:', data.response);
+    } catch (err) {
+      console.error('Hata:', err);
+    }
+  }
 
   useEffect(() => {
+    run("iphone 12")  
     // Event delegation ile modal açma/kapama
     $(document).on('click', '.js-show-modal1', function (e) {
       e.preventDefault();
@@ -158,7 +182,7 @@ const Home = () => {
                 {
                   cartItems.length > 0 ? cartItems.map(item => (
                     <li className="header-cart-item flex-w flex-t m-b-12">
-                      <div className="header-cart-item-img">
+                      <div className="header-cart-item-img" onClick={() => removeFromCart("ali@gmail.com", item.productID)}>
                         <img src="images/item-cart-01.jpg" alt="IMG" />
                       </div>
 
@@ -402,7 +426,7 @@ const Home = () => {
                               <a
                                 href="#"
                                 className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                                onClick={() => setSelectedProduct(product)}
+                                onClick={() => examine(product)}
                               >
                                 İncele
                               </a>

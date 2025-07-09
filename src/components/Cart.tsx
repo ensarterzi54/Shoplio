@@ -3,7 +3,7 @@ import { useCart } from '../context/CartContext'
 import { CardItem } from '../models'
 
 const Cart = () => {
-    const { isCartOpen, total, cartItems, closeCart, setTotal, setCartItems, order } = useCart()
+    const { isCartOpen, total, cartItems, closeCart, setTotal, setCartItems, order, removeFromCart } = useCart()
     const [totalAmount, setTotalAmount] = useState<number>(0)
 
     return (
@@ -14,7 +14,7 @@ const Cart = () => {
             <div className="header-cart flex-col-l p-l-65 p-r-25">
                 <div className="header-cart-title flex-w flex-sb-m p-b-8">
                 <span className="mtext-103 cl2">
-                    Your Cart
+                    Sepetim
                 </span>
 
                 <div className="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
@@ -28,20 +28,20 @@ const Cart = () => {
                     {
                         cartItems.length > 0 ? cartItems.map(item => (
                             <li className="header-cart-item flex-w flex-t m-b-12">
-                            <div className="header-cart-item-img">
-                                <img src="images/item-cart-01.jpg" alt="IMG" />
-                            </div>
+                                <div className="header-cart-item-img" onClick={() => removeFromCart("ali@gmail.com", item.productID)}>
+                                    <img src="images/item-cart-01.jpg" alt="IMG" />
+                                </div>
 
-                            <div className="header-cart-item-txt p-t-8">
-                                <a href="#" className="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                                {item.productName }
-                                </a>
+                                <div className="header-cart-item-txt p-t-8">
+                                    <a href="#" className="header-cart-item-name m-b-18 hov-cl1 trans-04">
+                                        { item.productName }
+                                    </a>
 
-                                <span className="header-cart-item-info">
-                                <p>{ item.quantity } Adet</p>
-                                { item.quantity } x { item.unitPrice } TL
-                                </span>
-                            </div>
+                                    <span className="header-cart-item-info">
+                                        <p>{ item.quantity } Adet</p>
+                                        { item.quantity } x { item.unitPrice } TL
+                                    </span>
+                                </div>
                             </li>
                         )) : null
                     }

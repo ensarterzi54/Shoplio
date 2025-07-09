@@ -13,6 +13,8 @@ interface CartContextType {
   setCartItems: React.Dispatch<React.SetStateAction<CardItem[]>>
   order: () => void
   getTotalAmount: () => void
+  getCart: () => void
+  removeFromCart: (email: string, productId: number) => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -35,6 +37,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 setCartItems(data)
             })
     }, []);
+
+    const getCart = () => {
+        fetch('https://localhost:7164/Cart/Index')
+            .then(res => res.json())
+            .then(data => {
+                console.log("asdad")
+                console.log(data)
+                setCartItems(data)
+            })
+    }
 
     const order = () => {
         fetch('https://localhost:7164/api/order?email=ali@gmail.com', { method: "POST" })
@@ -72,6 +84,27 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
     }
 
+    const removeFromCart = (email: string, productId: number) => {
+        console.log("Silme işlemi başlatılıyor:", email, productId);
+        fetch(`https://localhost:7164/api/cart/delete?email=${email}&productId=${productId}`, {
+            method: 'DELETE',
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Silme işlemi başarısız.");
+            }
+            return res.json();
+        })
+        .then(data => {
+            console.log("Silme sonucu:", data);
+            // İsteğe bağlı: sepeti yeniden yükle
+            getCart(); // varsa sepeti güncelleyen fonksiyon
+        })
+        .catch(err => {
+            console.error("Hata:", err.message);
+        })
+    }
+
     return (
         <CartContext.Provider 
             value={{ 
@@ -85,7 +118,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 setTotalAmount,
                 setCartItems,
                 order,
-                getTotalAmount
+                getTotalAmount,
+                removeFromCart,
+                getCart
             }}>
         {children}
         </CartContext.Provider>

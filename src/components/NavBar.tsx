@@ -61,13 +61,13 @@ const NavBar = () => {
 
                             <div className="menu-desktop">
                             <ul className="main-menu">
-                                <li className="active-menu">
+                                {/* <li className="active-menu">
                                 <a href="index.html">Home</a>
                                 <ul className="sub-menu">
                                     <li><Link to="/">Anasayfa</Link></li>
                                     <li><Link to="/products">Ürünler</Link></li>
                                 </ul>
-                                </li>
+                                </li> */}
                                 <li><Link to="/">Anasayfa</Link></li>
                                 <li><Link to="/products">Ürünler</Link></li>
                                 {/* <li>

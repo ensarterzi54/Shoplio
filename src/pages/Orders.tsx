@@ -23,55 +23,54 @@ const Orders = () => {
                         <div className="m-l-25 m-r--38 m-lr-0-xl">
                         <div className="wrap-table-shopping-cart">
                             <table className="table-shopping-cart">
-                            <tbody>
-                                <tr className="table_head">
-                                <th className="column-1">Satış ID</th>
-                                <th className="column-2">Toplam Tutar</th>
-                                <th className="column-3">Sipariş Tarihi</th>
-                                <th className="column-4">Durum</th>
-                                <th className="column-5"></th>
-                                </tr>
-                                {orders && orders.map((order) => (
-                                    <tr className="table_row" key={order.orderID}>
-                                        {/* <td className="column-1">
-                                            <div className="how-itemcart1">
-                                                <img src="images/item-cart-04.jpg" alt="IMG" />
-                                            </div>
-                                        </td> */}
-                                        <td className="column-1">{order.orderID}</td>
-                                        <td className="column-2">{order.totalAmount} TL</td>
-                                        <td className="column-3">
-                                            {order.orderDate}
-                                            {/* <div className="wrap-num-product flex-w m-l-auto m-r-0">
-                                                <div className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i className="fs-16 zmdi zmdi-minus" />
-                                                </div>
-                                                <input
-                                                className="mtext-104 cl3 txt-center num-product"
-                                                type="number"
-                                                name="num-product1"
-                                                defaultValue={1}
-                                                />
-                                                <div className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i className="fs-16 zmdi zmdi-plus" />
-                                                </div>
-                                            </div> */}
-                                        </td>
-                                        <td className="column-4">{order.status}</td>
-                                        <td>
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary"
-                                                onClick={() => handleDetailsClick(order.orderID)}
-                                            >
-                                                Detay
-                                            </button>
-                                        </td>
+                                <tbody>
+                                    <tr className="table_head">
+                                    <th className="column-1">Satış ID</th>
+                                    <th className="column-2">Toplam Tutar</th>
+                                    <th className="column-3">Sipariş Tarihi</th>
+                                    <th className="column-4">Durum</th>
+                                    <th className="column-5"></th>
                                     </tr>
-                                    ))}
-                                
-                                
-                            </tbody>
+                                    {
+                                        orders && orders.map((order) => (
+                                            <tr className="table_row" key={order.orderID}>
+                                                {/* <td className="column-1">
+                                                    <div className="how-itemcart1">
+                                                        <img src="images/item-cart-04.jpg" alt="IMG" />
+                                                    </div>
+                                                </td> */}
+                                                <td className="column-1">{order.orderID}</td>
+                                                <td className="column-2">{order.totalAmount} TL</td>
+                                                <td className="column-3">
+                                                    {order.orderDate}
+                                                    {/* <div className="wrap-num-product flex-w m-l-auto m-r-0">
+                                                        <div className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                                        <i className="fs-16 zmdi zmdi-minus" />
+                                                        </div>
+                                                        <input
+                                                        className="mtext-104 cl3 txt-center num-product"
+                                                        type="number"
+                                                        name="num-product1"
+                                                        defaultValue={1}
+                                                        />
+                                                        <div className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                                        <i className="fs-16 zmdi zmdi-plus" />
+                                                        </div>
+                                                    </div> */}
+                                                </td>
+                                                <td className="column-4">{order.status}</td>
+                                                <td>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-primary"
+                                                        onClick={() => handleDetailsClick(order.orderID)}
+                                                    >
+                                                        Detay
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
                             </table>
                         </div>
                         {/* <div className="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
