@@ -87,16 +87,22 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 
     const getTotalAmount = () => {
-        const email = "ali@gmail.com"; // Kullanıcı emailini buradan alın
+        const email = localStorage.getItem("userEmail");
+  
+        if (!email) {
+            console.warn("Kullanıcı email bilgisi bulunamadı!");
+            return; // veya hata işlemi yap
+        }
+
         fetch(`https://localhost:7164/api/cart?email=${encodeURIComponent(email)}`)
-        .then(res => res.json())
-        .then(data => {
-            // Use cart data in your React component
-            console.log(data);
-            setCartItems(data.items);
-            //Kartta ki ürünlerin toplam tutarı
-            setTotalAmount(data.totalAmount);
-        });
+            .then(res => res.json())
+            .then(data => {
+                // Use cart data in your React component
+                console.log("getTotalAmount",data);
+                setCartItems(data.items);
+                //Kartta ki ürünlerin toplam tutarı
+                setTotalAmount(data.totalAmount);
+            });
     }
 
     const removeFromCart = (email: string, productId: number) => {

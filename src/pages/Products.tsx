@@ -9,7 +9,7 @@ type AddToCartParams = {
   quantity: number;
 }
 const Products = () => {
-  const { totalAmount, cartItems, total, setTotalAmount, setCartItems, setTotal, order, getTotalAmount, getCart } = useCart()
+  const { totalAmount, cartItems, total, setTotalAmount, setCartItems, removeFromCart, setTotal, order, getTotalAmount, getCart } = useCart()
   const { products, categories, filtredCatogory, searchedProducts, sortProducts } = useProduct()
   const [activeCategory, setActiveCategory] = useState<string | number>('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -374,7 +374,18 @@ const Products = () => {
                 {
                   cartItems.length > 0 ? cartItems.map(item => (
                     <li className="header-cart-item flex-w flex-t m-b-12">
-                      <div className="header-cart-item-img">
+                      <div 
+                        className="header-cart-item-img" 
+                        onClick={() => {
+                          console.log("Removing item from cart:", item.productID);
+                          const userEmail = localStorage.getItem("userEmail");
+                          if (userEmail) {
+                            removeFromCart(userEmail, item.productID);
+                          } else {
+                            console.warn("Kullanıcı e-postası bulunamadı.");
+                          }
+                        }}
+                      >
                         <img src="images/item-cart-01.jpg" alt="IMG" />
                       </div>
 

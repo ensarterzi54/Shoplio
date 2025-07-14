@@ -189,7 +189,18 @@ const Home = () => {
                 {
                   cartItems.length > 0 ? cartItems.map(item => (
                     <li className="header-cart-item flex-w flex-t m-b-12">
-                      <div className="header-cart-item-img" onClick={() => removeFromCart("ali@gmail.com", item.productID)}>
+                      <div 
+                        className="header-cart-item-img" 
+                        onClick={() => {
+                          console.log("Removing item from cart:", item.productID);
+                          const userEmail = localStorage.getItem("userEmail");
+                          if (userEmail) {
+                            removeFromCart(userEmail, item.productID);
+                          } else {
+                            console.warn("Kullanıcı e-postası bulunamadı.");
+                          }
+                        }}
+                      >
                         <img src="images/item-cart-01.jpg" alt="IMG" />
                       </div>
 
