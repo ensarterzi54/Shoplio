@@ -22,6 +22,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         fetch('https://localhost:7164/api/products?&sort=asc')
             .then(res => res.json())
             .then((data: Product[]) => {
+                console.log('Fetched products:', data)
                 setProducts(data)
             })
             .catch(err => {

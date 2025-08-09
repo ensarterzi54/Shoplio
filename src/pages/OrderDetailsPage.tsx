@@ -4,26 +4,58 @@ import type OrderDetails from '../models/OrderDetails';
 import NavBar from '../components/NavBar';
 import { useOrder } from '../context/OrderContext';
 import { get } from 'jquery';
+import Cart from '../components/Cart';
 
 const OrderDetailsPage = () => {
-    const { orderDetails, getOrderDetails } = useOrder()
+    const { orders, orderDetails, getOrderDetails } = useOrder();
     const { orderId } = useParams<{ orderId: string }>();
     const location = useLocation();
+    const locationState = location.state as { order?: object, orderDetailsData?: OrderDetails[] };
     const state = location.state as { orderDetailsData?: OrderDetails[] };
     
     const [details, setDetails] = useState<OrderDetails[] | null>(state?.orderDetailsData || null);
 
     useEffect(() => {
-      console.log("Fetching order details for orderId:", orderId);
-      getOrderDetails(Number(orderId))
-    }, [])
+        if (!orderId) return;
+
+        // Öncelikle location.state'den order al
+        let order = locationState?.order;
+
+        // Yoksa global orders listesinden bul
+        if (!order) {
+            order = orders.find(o => (o as any).id === Number(orderId));
+            if (!order) {
+                console.error("Order objesi bulunamadı!");
+                return;
+            }
+        }
+
+        // getOrderDetails'i hem order objesi hem orderId ile çağır
+        getOrderDetails(order, Number(orderId));
+        console.log("details", details)
+    }, [orderId, orders]);
     return (
       <div>
         <div>
           <NavBar />
-          
+          <Cart />
+            {
+                locationState?.order && 
+                    (
+                        <div className="container">
+                            <div className="p-4 m-4 row flex flex-col border border-gray-300 rounded shadow-md bg-white">
+                                <h2 className="text-xl font-bold mb-2">Sipariş Özeti</h2>
+                                <p><strong>Sipariş ID:</strong> {(locationState.order as any).orderID}</p>
+                                <p><strong>Tarih:</strong> {(locationState.order as any).orderDate}</p>
+                                <p><strong>İşlem durumu:</strong> {(locationState.order as any).status}</p>
+                                <p><strong>Toplam Tutar:</strong> ₺{(locationState.order as any).totalAmount}</p>
+                            </div>
+                        </div>
+                    )
+            }
+            
 
-          <form className="bg0 p-t-75 p-b-85">
+            <form className="bg0 p-t-75 p-b-85">
                 <div className="container">
                     <div className="row">
                     <div className="col-lg-10 col-xl-12 m-lr-auto m-b-50">

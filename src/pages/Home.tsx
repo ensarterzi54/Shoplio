@@ -5,6 +5,7 @@ import { Product, CardItem } from '../models';
 import NavBar from '../components/NavBar';
 import { useCart } from '../context/CartContext';
 import { useProduct } from '../context/ProductContext';
+import Cart from '../components/Cart';
 interface TotalCartAmountDto {
   totalCartAmount: number;
 }
@@ -111,21 +112,6 @@ const Home = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // Sepet açma/kapama eventlerini sadece bir kez ekle
-    $('.js-show-cart').on('click', function () {
-      $('.js-panel-cart').addClass('show-header-cart');
-    });
-    $('.js-hide-cart').on('click', function () {
-      $('.js-panel-cart').removeClass('show-header-cart');
-    });
-
-    // Temizlik: component unmount olunca eventleri kaldır
-    return () => {
-      $('.js-show-cart').off('click');
-      $('.js-hide-cart').off('click');
-    };
-  }, []);
 
   useEffect(() => {
     const email = localStorage.getItem("userEmail") ?? "";
@@ -167,9 +153,9 @@ const Home = () => {
         
         <NavBar />
         
-
+        <Cart />
         {/* Sepet */}
-        <div className="wrap-header-cart js-panel-cart">
+        {/* <div className="wrap-header-cart js-panel-cart">
           <div className="s-full js-hide-cart"></div>
 
           <div className="header-cart flex-col-l p-l-65 p-r-25">
@@ -235,7 +221,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <section className="sec-product bg0 p-t-100 p-b-50">
           <div className="container">

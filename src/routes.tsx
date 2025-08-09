@@ -3,12 +3,12 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import Orders from './pages/Orders';
 import OrderDetailsPage from './pages/OrderDetailsPage';
-// import ChatBot from './pages/ChatBot';
 import Login from './pages/login/Login';
 import Admin from './pages/Admin';
 import User from './pages/User';
 import ProtectedRoute from './components/ProtectedRoute';
 import Unauthorized from './pages/Unauthorized';
+import ChatBot from './components/Chat';
 const AppRoutes = () => {
   const isAuthenticated = localStorage.getItem('jwt') !== null;
   console.log("Is Authenticated:", isAuthenticated);
@@ -53,14 +53,14 @@ const AppRoutes = () => {
         </ProtectedRoute>
       ),
     },
-    // {
-    //   path: '/chat-bot',
-    //   element: (
-    //     <ProtectedRoute>
-    //       <ChatBot />
-    //     </ProtectedRoute>
-    //   ),
-    // },
+    {
+      path: '/chat-bot',
+      element: (
+        <ProtectedRoute>
+          <ChatBot />
+        </ProtectedRoute>
+      ),
+    },
 
     {
       path: '/admin',

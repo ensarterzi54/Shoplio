@@ -1,6 +1,7 @@
 export default interface Product {
-  categoryID: number;
-  productID: number;
-  productName: string;
-  unitPrice: number;
+  categoryID: number
+  productID: number
+  productName: string
+  unitPrice: number
+  imageUrl: string
 }

@@ -71,7 +71,7 @@ const NavBar = () => {
         };
     }, []);
     return (
-        <div>
+        <>
             <header className="header-v2">
                 <div className="container-menu-desktop trans-03">
                     <div className="wrap-menu-desktop">
@@ -404,7 +404,7 @@ const NavBar = () => {
                 </div>
             </div>
             </aside>
-        </div>
+        </>
     )
 }
 

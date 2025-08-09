@@ -3,6 +3,8 @@ import NavBar from '../components/NavBar';
 import { useCart } from '../context/CartContext';
 import { useProduct } from '../context/ProductContext';
 import { Product } from '../models';
+import Cart from '../components/Cart';
+import Typewriter from 'react-ts-typewriter';
 type AddToCartParams = {
   email: string;
   productId: number;
@@ -33,7 +35,7 @@ const Products = () => {
     console.log('Selected product:', product)
     setSelectedProduct(product)
     //burda ollamayı çağır
-    // run(product.productName)
+    run(product.productName)
   }
 
   const run = async (product: string) => {
@@ -173,6 +175,7 @@ const Products = () => {
   return (
     <>
       <NavBar />
+      <Cart />
         <div className="wrap-modal1 js-modal1 p-t-60 p-b-20">
           <div className="overlay-modal1 js-hide-modal1"></div>
 
@@ -192,7 +195,7 @@ const Products = () => {
                       <div className="slick3 gallery-lb">
                         <div className="item-slick3" data-thumb="images/product-detail-01.jpg">
                           <div className="wrap-pic-w pos-relative">
-                            <img src="images/product-detail-01.jpg" alt="IMG-PRODUCT" />
+                            <img src={selectedProduct?.imageUrl} alt={selectedProduct?.productName} />
 
                             <a className="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-01.jpg">
                               <i className="fa fa-expand"></i>
@@ -280,7 +283,10 @@ const Products = () => {
                             </div>
                           </div> */}
                           <div>
-                            {ollamaDescription && <div>{ollamaDescription}</div>}
+                            {ollamaDescription && (
+                                // <Typewriter text={ollamaDescription} />
+                                <p>{ollamaDescription}</p>
+                            )}
                           </div>
 
                           <div className="flex-w flex-r-m p-b-10">
@@ -354,76 +360,7 @@ const Products = () => {
           </div>
         </div>
       {/* Sepet */}
-        <div className="wrap-header-cart js-panel-cart">
-          <div className="s-full js-hide-cart"></div>
-
-          <div className="header-cart flex-col-l p-l-65 p-r-25">
-            <div className="header-cart-title flex-w flex-sb-m p-b-8">
-              <span className="mtext-103 cl2">
-                Your Cart
-              </span>
-
-              <div className="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
-                <i className="zmdi zmdi-close"></i>
-              </div>
-            </div>
-            
-            <div className="header-cart-content flex-w js-pscroll">
-              <ul className="header-cart-wrapitem w-full">
-
-                {
-                  cartItems.length > 0 ? cartItems.map(item => (
-                    <li className="header-cart-item flex-w flex-t m-b-12">
-                      <div 
-                        className="header-cart-item-img" 
-                        onClick={() => {
-                          console.log("Removing item from cart:", item.productID);
-                          const userEmail = localStorage.getItem("userEmail");
-                          if (userEmail) {
-                            removeFromCart(userEmail, item.productID);
-                          } else {
-                            console.warn("Kullanıcı e-postası bulunamadı.");
-                          }
-                        }}
-                      >
-                        <img src="images/item-cart-01.jpg" alt="IMG" />
-                      </div>
-
-                      <div className="header-cart-item-txt p-t-8">
-                        <a href="#" className="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                          {item.productName }
-                        </a>
-
-                        <span className="header-cart-item-info">
-                          <p>{ item.quantity } Adet</p>
-                          { item.quantity } x { item.unitPrice } TL
-                        </span>
-                      </div>
-                    </li>
-                  )) : null
-                }
-              </ul>
-              <div className="w-full">
-                <div className="header-cart-total w-full p-tb-40">
-                  Toplam Tutar: { totalAmount }  TL
-                </div>
-
-                <div className="header-cart-buttons flex-w w-full">
-                  <button
-                    className="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10"
-                    onClick={order}
-                  >
-                    Sipariş ver
-                  </button>
-
-                  {/* <a href="shoping-cart.html" className="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                    Check Out
-                  </a> */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        
         
       {/* Product */}
       <div className="bg0 m-t-23 p-b-140">
@@ -680,14 +617,24 @@ const Products = () => {
                   <div className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
                     {/* Block2 */}
                     <div className="block2">
-                      <div className="block2-pic hov-img0">
-                        <img src="images/product-01.jpg" alt="IMG-PRODUCT" />
+                      <div className="block2-pic hov-img0" style={{ width: '100%', height: '250px', overflow: 'hidden' }}>
+                        <img
+                          src={product.imageUrl}
+                          alt={product.productName}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                            display: 'block'
+                          }}
+                        />
                         <a
                           href="#"
                           className="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
                           onClick={e => {
                             e.preventDefault();
-                            examine(product)
+                            examine(product);
                             $('.js-modal1').addClass('show-modal1');
                           }}
                         >

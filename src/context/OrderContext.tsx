@@ -10,7 +10,7 @@ interface OrderContextType {
     getOrders: () => void
     orderDetails: OrderDetails[]
     setOrderDetails: React.Dispatch<React.SetStateAction<OrderDetails[]>>
-    getOrderDetails: (id: number) => void
+    getOrderDetails: (order: object, id: number) => void
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined)
@@ -44,7 +44,8 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             .catch(err => console.error(err));
     }
 
-    const getOrderDetails = (orderId: number) => {
+    const getOrderDetails = (order: object, orderId: number) => {
+        console.log("getOrderDetails çağrıldı:", order, orderId);
         fetch(`https://localhost:7164/Order/Details?id=${orderId}`)
             .then(async res => {
                 if (!res.ok) {
@@ -59,12 +60,16 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
                 }
             })
             .then(data => {
-                console.log("Gelen detay verisi:", data)
-                navigate(`/order-details/${orderId}`, { state: { orderDetailsData: data } })
-                // setOrderDetails(data) gibi bir state'e atayabilirsin
+                console.log("Gelen detay verisi:", data);
                 setOrderDetails(data);
+                // order objesini de state ile gönderiyoruz
+                navigate(`/order-details/${orderId}`, { state: { orderDetailsData: data, order } });
             })
-            .catch(err => console.error("Detay fetch hatası:", err));
+            .catch(err => {
+                console.error("Detay fetch hatası:", err);
+                // İstersen hata state'ini burada set edebilirsin
+                // setError(err.message);
+            });
     };
     return (
         <OrderContext.Provider 
