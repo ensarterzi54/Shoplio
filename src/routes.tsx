@@ -8,7 +8,7 @@ import Admin from './pages/Admin';
 import User from './pages/User';
 import ProtectedRoute from './components/ProtectedRoute';
 import Unauthorized from './pages/Unauthorized';
-import ChatBot from './components/Chat';
+// import ChatBot from './components/Chat';
 const AppRoutes = () => {
   const isAuthenticated = localStorage.getItem('jwt') !== null;
   console.log("Is Authenticated:", isAuthenticated);
@@ -53,14 +53,14 @@ const AppRoutes = () => {
         </ProtectedRoute>
       ),
     },
-    {
-      path: '/chat-bot',
-      element: (
-        <ProtectedRoute>
-          <ChatBot />
-        </ProtectedRoute>
-      ),
-    },
+    // {
+    //   path: '/chat-bot',
+    //   element: (
+    //     <ProtectedRoute>
+    //       <ChatBot />
+    //     </ProtectedRoute>
+    //   ),
+    // },
 
     {
       path: '/admin',

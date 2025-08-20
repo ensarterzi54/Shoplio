@@ -31,6 +31,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     useEffect(() => {
         
         getCart()
+        getTotalAmount();
     }, []);
 
     const getCart = () => {
@@ -41,7 +42,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             return;
         }
 
-        fetch(`https://localhost:7164/Cart/Index?email=${encodeURIComponent(email)}`)
+        fetch(`https://localhost:7062/api/Carts/getCartItems?email=${encodeURIComponent(email)}`)
             .then(res => res.json())
             .then(data => {
                 console.log("asdad");
@@ -55,29 +56,36 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     const order = () => {
+        console.log("Sipariş veriliyor...");
     const email = localStorage.getItem("userEmail");
     if (!email) {
         console.error("Email localStorage'da bulunamadı.");
         return;
     }
 
-    fetch(`https://localhost:7164/api/order?email=${encodeURIComponent(email)}`, { method: "POST" })
-        .then(res => res.json())
+    fetch(`https://localhost:7062/api/Orders/createOrder?email=${encodeURIComponent(email)}`, { method: "POST" })
+        .then(res => {
+            console.log("Sipariş verildi:", res);
+            return res.json();
+        })
         .then(data => {
+            console.log("Sipariş verildi dataaaaaaaaaa:", data);
             if (Array.isArray(data)) {
                 console.log("Siparişler:", data);
                 console.log("Sipariş adedi:", data.length);
-
-                fetch(`https://localhost:7164/Cart/Index?email=${encodeURIComponent(email)}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log("asdad");
-                        console.log(data);
-                        setCartItems(data);
-                        setTotal(0);
-                        setTotalAmount(0);
-                        getTotalAmount();
-                    });
+                console.log("---------------------------------------------")
+                getCart()
+                getTotalAmount();
+                // fetch(`https://localhost:7164/Cart/Index?email=${encodeURIComponent(email)}`)
+                //     .then(res => res.json())
+                //     .then(data => {
+                //         console.log("asdad");
+                //         console.log(data);
+                //         setCartItems(data);
+                //         setTotal(0);
+                //         setTotalAmount(0);
+                //         getTotalAmount();
+                //     });
             } else {
                 console.error("Beklenmeyen veri formatı:", data);
             }
@@ -87,6 +95,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 
     const getTotalAmount = () => {
+        console.log("getTotalAmount fonksiyonu çağrıldı");
         const email = localStorage.getItem("userEmail");
   
         if (!email) {
@@ -94,20 +103,22 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             return; // veya hata işlemi yap
         }
 
-        fetch(`https://localhost:7164/api/cart?email=${encodeURIComponent(email)}`)
+        fetch(`https://localhost:7062/api/Carts/getCartAmount?email=${encodeURIComponent(email)}`)
             .then(res => res.json())
             .then(data => {
                 // Use cart data in your React component
-                console.log("getTotalAmount",data);
-                setCartItems(data.items);
+                console.log("getTotalAmount",data[0].totalCartAmount);
                 //Kartta ki ürünlerin toplam tutarı
-                setTotalAmount(data.totalAmount);
+                setTotalAmount(data[0].totalCartAmount);
+            })
+            .catch(err => {
+                console.error("Sepet verisi alınırken hata oluştu:", err);
             });
     }
 
     const removeFromCart = (email: string, productId: number) => {
         console.log("Silme işlemi başlatılıyor:", email, productId);
-        fetch(`https://localhost:7164/api/cart/delete?email=${email}&productId=${productId}`, {
+        fetch(`https://localhost:7062/api/Carts/deleteItem?id=${productId}`, {
             method: 'DELETE',
         })
         .then(res => {

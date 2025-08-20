@@ -5,4 +5,5 @@ export default interface CartItems {
   unitPrice: number;
   totalPrice: number;
   imageUrl: string;
+  bos: boolean;
 }

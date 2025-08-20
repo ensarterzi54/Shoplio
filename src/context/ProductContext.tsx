@@ -19,17 +19,21 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [categories, setCategories] = useState<Category[]>([]);
     
     useEffect(() => {
-        fetch('https://localhost:7164/api/products?&sort=asc')
-            .then(res => res.json())
-            .then((data: Product[]) => {
-                console.log('Fetched products:', data)
-                setProducts(data)
+        fetch('https://localhost:7062/api/products', {
+                method: 'GET',
+                credentials: 'include',
+                mode: 'cors'
             })
-            .catch(err => {
-                console.error('API isteği başarısız:', err)
-            })
+                .then(res => res.json())
+                .then((data: Product[]) => {
+                    console.log('Fetched products:', data);
+                    setProducts(data);
+                })
+        .catch(err => {
+            console.error('API isteği başarısız:', err);
+        });
 
-        fetch('https://localhost:7164/api/categories')
+        fetch('https://localhost:7062/api/Categories')
             .then(res => res.json())
             .then((data: Category[]) => {
                     console.log('Fetched categories:', data)
@@ -40,26 +44,28 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }, [])
 
     const searchedProducts = (queryParams: URLSearchParams) => {
-        console.log('Searching products with query:', queryParams)
-        fetch(`https://localhost:7164/api/products?${queryParams.toString()}`)
+        
+        fetch(`https://localhost:7062/api/products/search?${queryParams.toString()}`)
             .then(async res => {
                 if (!res.ok) {
-                    const text = await res.text()
+                    const text = await res.text();
                     throw new Error(`Sunucu hatası: ${res.status} - ${text}`)
                 }
                 return res.json()
             })
             .then((data: Product[]) => {
-                console.log('Searched products:', data)
+                console.log("Searched products:", data)
                 setProducts(data)
             })
             .catch(err => {
-                console.error('API isteği başarısız:', err.message)
+                console.error("API isteği başarısız:", err.message)
             })
     }
 
+
     const filtredCatogory = (category: string) => {
-        fetch(`https://localhost:7164/api/products?category=${encodeURIComponent(category)}`)
+        console.log("Filtering products by category:", category);
+        fetch(`https://localhost:7062/api/Categories/productsByCategory?category=${encodeURIComponent(category)}`)
             .then(res => res.json())
             .then((data: Product[]) => {
                 console.log('Filtered products by category:', data)
@@ -71,15 +77,21 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
 
     const sortProducts = (sortDirection: 'asc' | 'desc') => {
-        fetch(`https://localhost:7164/api/products?&sort=${sortDirection}`)
-            .then(res => res.json())
+        fetch(`https://localhost:7062/api/products/sort?sort=${sortDirection}`)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`API isteği başarısız: ${res.status}`);
+                }
+                return res.json();
+            })
             .then((data: Product[]) => {
-                setProducts(data)
+                setProducts(data);
             })
             .catch(err => {
-                console.error('API isteği başarısız:', err)
-            })
+                console.error('API isteği başarısız:', err);
+            });
     };
+
 
 
 

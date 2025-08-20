@@ -67,10 +67,12 @@ const Products = () => {
    // Sayfa ilk yüklendiğinde 'all' seçili olacak
   useEffect(() => {
     setActiveCategory('all');
+    categories.forEach((element) => console.log(element));
   }, []);
 
-  const handleClick = (categoryId: number | string, categoryName: string) => {
-    setActiveCategory(categoryId)
+  const handleClick = (categoryID: number | string, categoryName: string) => {
+    console.log("Category clicked:", categoryID, categoryName);
+    setActiveCategory(categoryID)
     filtredCatogory(categoryName)
   }
 
@@ -79,7 +81,7 @@ const Products = () => {
       const email = localStorage.getItem("userEmail");
       if (!email) throw new Error("Kullanıcı e-posta bilgisi bulunamadı.");
 
-      const response = await fetch("https://localhost:7164/api/cart/add", {
+      const response = await fetch("https://localhost:7062/api/Carts/createCartItem", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -111,18 +113,18 @@ const Products = () => {
     }
   };
 
-  useEffect(() => {
-      const email = localStorage.getItem("userEmail") ?? "";
-      fetch(`https://localhost:7164/api/cart?email=${encodeURIComponent(email)}`)
-        .then(res => res.json())
-        .then(data => {
-          console.log("Cart Items products sayfası:", data);
-          // Use cart data in your React component
-          console.log(data.totalAmount);
-          setCartItems(data.items);
-          setTotalAmount(data.totalAmount);
-        });
-    }, [])
+  // useEffect(() => {
+  //     const email = localStorage.getItem("userEmail") ?? "";
+  //     fetch(`https://localhost:7062/api/Carts/getCart?email=${encodeURIComponent(email)}`)
+  //       .then(res => res.json())
+  //       .then(data => {
+  //         console.log("Cart Items products sayfası:", data);
+  //         // Use cart data in your React component
+  //         console.log(data.totalAmount);
+  //         setCartItems(data.items);
+  //         setTotalAmount(data.totalAmount);
+  //       });
+  //   }, [])
 
   useEffect(() => {
     // Sepet açma/kapama eventlerini sadece bir kez ekle
@@ -371,7 +373,7 @@ const Products = () => {
                 className={`stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 ${
                   activeCategory === 'all' ? 'how-active1' : ''
                 }`}
-                onClick={() => handleClick("all", "")}
+                onClick={() => handleClick("all", "all")}
                 data-filter="*"
               >
                 Tüm Kategoriler
@@ -381,11 +383,11 @@ const Products = () => {
                   categories &&
                     categories.map((category) => (
                       <button
-                        key={category.categoryId}
+                        key={category.categoryID}
                         className={`stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 ${
-                          activeCategory === category.categoryId ? 'how-active1' : ''
+                          activeCategory === category.categoryID ? 'how-active1' : ''
                         }`}
-                        onClick={() => handleClick(category.categoryId, category.categoryName)}
+                        onClick={() => handleClick(category.categoryID, category.categoryName)}
                         data-filter={`.${category.categoryName.toLowerCase()}`}
                       >
                         {category.categoryName}
@@ -414,7 +416,7 @@ const Products = () => {
                   onClick={(e) => {
                     e.preventDefault()
                     const params = new URLSearchParams(searchQuery)
-                    params.append('search', searchQuery)
+                    params.append('keyword', searchQuery)
                     searchedProducts(params)
                     setActiveCategory('all')
                   }}

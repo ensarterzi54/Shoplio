@@ -22,10 +22,6 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
 
-    useEffect(() => {
-        console.log("Fetching orders...")
-        
-    }, [])
     const getOrders = () => {
         console.log("Fetching orders...");
         const email = localStorage.getItem("userEmail");
@@ -35,10 +31,10 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             return;
         }
 
-        fetch(`https://localhost:7164/Order/GetOrders?email=${encodeURIComponent(email)}`)
+        fetch(`https://localhost:7062/api/Orders?email=${encodeURIComponent(email)}`)
             .then(res => res.json())
             .then(data => {
-                console.log("Gelen veri:", data);
+                console.log("Gelen veri Ordes:", data);
                 setOrders(data);
             })
             .catch(err => console.error(err));
@@ -46,7 +42,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const getOrderDetails = (order: object, orderId: number) => {
         console.log("getOrderDetails çağrıldı:", order, orderId);
-        fetch(`https://localhost:7164/Order/Details?id=${orderId}`)
+        fetch(`https://localhost:7062/api/Orders/orderDetails?id=${orderId}`)
             .then(async res => {
                 if (!res.ok) {
                     throw new Error("Sunucudan geçerli cevap alınamadı.");

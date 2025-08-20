@@ -41,7 +41,7 @@ const Home = () => {
       const email = localStorage.getItem("userEmail");
       if (!email) throw new Error("Kullanıcı e-posta bilgisi bulunamadı.");
 
-      const response = await fetch("https://localhost:7164/api/cart/add", {
+      const response = await fetch("https://localhost:7062/api/Carts/createCartItem", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

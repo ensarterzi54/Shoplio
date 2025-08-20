@@ -258,7 +258,7 @@ const NavBar = () => {
                             onSubmit={(e) => {
                                 e.preventDefault(); // Sayfa yenilemeyi engelle
                                 const params = new URLSearchParams();
-                                params.append('search', productSearch); // veya 'ürün 1' gibi sabit bir şey
+                                params.append('keyword', productSearch); // veya 'ürün 1' gibi sabit bir şey
                                 searchedProducts(params);
                             }}
                         >
