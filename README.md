@@ -1,7 +1,6 @@
 🛒 Shoplio
 
-Shoplio, kullanıcıların ürünleri görüntüleyip, sepetlerine ekleyebildikleri ve sipariş yönetimi yapabildikleri e-ticaret uygulamasıdır.
-Proje, ASP.NET Core MVC (backend), MS SQL Server (veritabanı) ve React + TypeScript (frontend) teknolojileri ile geliştirilmiştir.
+Shoplio, kullanıcıların ürünleri görüntüleyip, sepetlerine ekleyebildikleri ve sipariş yönetimi yapabildikleri e-ticaret uygulamasıdır. Otokar Otomotiv ve Savunma Sanayi 'de yaptığım yaz stajımda istenilen yol haritasına göre başarıyla teslim edilmiştir. Proje, ASP.NET Core Web API (backend), MS SQL Server (veritabanı) ve React + TypeScript (frontend) teknolojileri ile geliştirilmiştir.
 
 🚀 Özellikler
 
@@ -15,15 +14,13 @@ Proje, ASP.NET Core MVC (backend), MS SQL Server (veritabanı) ve React + TypeSc
 
 📊 Admin paneli (ürün ve kategori yönetimi)
 
-⚡ Modern, responsive arayüz (React + MUI)
-
 🤖 Ollama ile ürün analizi (ürün verilerini yapay zeka destekli analiz etme)
 
 🛠️ Kullanılan Teknolojiler
 
-Frontend: React, TypeScript, SCSS, MUI
+Frontend: React, TypeScript
 
-Backend: ASP.NET Core MVC, Entity Framework Core
+Backend: ASP.NET Core Web API, Entity Framework Core
 
 Database: MS SQL Server
 
@@ -34,6 +31,8 @@ Database: MS SQL Server
  Ürün listeleme
 
  Sepet yönetimi
+
+ YAPILACAKLAR
 
  Sipariş ödeme entegrasyonu
 
