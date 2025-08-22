@@ -4,15 +4,13 @@ Shoplio, kullanıcıların ürünleri görüntüleyip, sepetlerine ekleyebildikl
 
 🚀 Özellikler
 
-🔐 Kullanıcı kimlik doğrulama (login & register)
+🔐 Kullanıcı kimlik doğrulama (JwtBearer)
 
 🛍️ Ürün listeleme ve arama
 
 ➕ Sepete ürün ekleme, çıkarma
 
 📦 Sipariş oluşturma ve sipariş geçmişi görüntüleme
-
-📊 Admin paneli (ürün ve kategori yönetimi)
 
 🤖 Ollama ile ürün analizi (ürün verilerini yapay zeka destekli analiz etme)
 
@@ -36,8 +34,12 @@ Database: MS SQL Server
 
  Sipariş ödeme entegrasyonu
 
+ Admin paneli (ürün ve kategori yönetimi)
+
  Kullanıcı bildirimleri
 
  Mobil uyum geliştirmeleri
 
  🤖 Yapay Zeka entegrasyonu (akıllı ürün önerileri, chatbot vb.)
+
+![Shoplio Logo](public/shoplio-anasayfa.png)
