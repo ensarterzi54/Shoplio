@@ -1,46 +1,44 @@
-# Getting Started with Create React App
+🛒 Shoplio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Shoplio, kullanıcıların ürünleri görüntüleyip, sepetlerine ekleyebildikleri ve sipariş yönetimi yapabildikleri e-ticaret uygulamasıdır.
+Proje, ASP.NET Core MVC (backend), MS SQL Server (veritabanı) ve React + TypeScript (frontend) teknolojileri ile geliştirilmiştir.
 
-## Available Scripts
+🚀 Özellikler
 
-In the project directory, you can run:
+🔐 Kullanıcı kimlik doğrulama (login & register)
 
-### `npm start`
+🛍️ Ürün listeleme ve arama
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+➕ Sepete ürün ekleme, çıkarma
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+📦 Sipariş oluşturma ve sipariş geçmişi görüntüleme
 
-### `npm test`
+📊 Admin paneli (ürün ve kategori yönetimi)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+⚡ Modern, responsive arayüz (React + MUI)
 
-### `npm run build`
+🤖 Ollama ile ürün analizi (ürün verilerini yapay zeka destekli analiz etme)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+🛠️ Kullanılan Teknolojiler
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Frontend: React, TypeScript, SCSS, MUI
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Backend: ASP.NET Core MVC, Entity Framework Core
 
-### `npm run eject`
+Database: MS SQL Server
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+📌 Yol Haritası
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ Auth (login/register)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+ Ürün listeleme
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+ Sepet yönetimi
 
-## Learn More
+ Sipariş ödeme entegrasyonu
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+ Kullanıcı bildirimleri
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+ Mobil uyum geliştirmeleri
+
+ 🤖 Yapay Zeka entegrasyonu (akıllı ürün önerileri, chatbot vb.)
