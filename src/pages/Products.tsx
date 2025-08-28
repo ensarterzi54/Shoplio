@@ -4,7 +4,8 @@ import { useCart } from '../context/CartContext';
 import { useProduct } from '../context/ProductContext';
 import { Product } from '../models';
 import Cart from '../components/Cart';
-import Typewriter from 'react-ts-typewriter';
+import { Typewriter } from 'react-simple-typewriter'
+import HomeCartContent from '../components/HomeCartContent';
 type AddToCartParams = {
   email: string;
   productId: number;
@@ -23,6 +24,11 @@ const Products = () => {
     'Yüksekten Düşüğe',
     'Düşükten Yükseğe'
   ])
+
+  const llamaLogo = {
+    width: "150px",
+  }
+
   const increaseQuantity = () => {
     setQuantity(prev => prev + 1)
   };
@@ -40,29 +46,55 @@ const Products = () => {
 
   const run = async (product: string) => {
     try {
-      const res = await fetch('https://localhost:7164/api/ollama/ask', {
+      const res = await fetch('https://localhost:7062/api/Ollama/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ "prompt": product }),
+        body: JSON.stringify(product),
       });
 
       if (!res.ok) {
-        const error = await res.text();
+        const error = await res.text()
         throw new Error(error);
       }
 
-      const data = await res.json();
+      const data = await res.json()
 
-      console.log('API yanıtı:', data);
-      console.log('API yanıtı:', data.response);
-      const cleanResponse = data.response.split('</think>')[1]?.trim();
-      setOllamaDescription(cleanResponse)
+      console.log('API yanıtı:', data)
+      console.log('API yanıtı:', data.response)
+      setOllamaDescription(data.response)
     } catch (err) {
       console.error('Hata:', err);
     }
   }
+
+  const notTryCatchRun = (product: string) => {
+    fetch('https://localhost:7164/api/ollama/ask', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
+      })
+        .then(async (res) => {
+          if (!res.ok) {
+            const error = await res.text();
+            throw new Error(error);
+          }
+          return res.json();
+        })
+        .then((data) => {
+          console.log('API yanıtı:', data);
+          console.log('API yanıtı:', data.response);
+
+          const cleanResponse = data.response?.split('</think>')[1]?.trim() || data.response;
+          setOllamaDescription(cleanResponse);
+        })
+        .catch((err) => {
+          console.error('Hata:', err);
+        });
+      }
 
    // Sayfa ilk yüklendiğinde 'all' seçili olacak
   useEffect(() => {
@@ -177,6 +209,7 @@ const Products = () => {
   return (
     <>
       <NavBar />
+      <HomeCartContent />
       <Cart />
         <div className="wrap-modal1 js-modal1 p-t-60 p-b-20">
           <div className="overlay-modal1 js-hide-modal1"></div>
@@ -237,7 +270,27 @@ const Products = () => {
                             {selectedProduct.productName}
                           </h4>
 
-                          <span className="mtext-106 cl2">
+                          <div style={{ marginBottom: "50px", textAlign: "justify" }}>
+                            <img 
+                              src="/llama2.png"   // kendi resim yolunla değiştir
+                              alt="llama"
+                              style={{ width: "40px" }}
+                            />
+                            {
+                              <Typewriter
+                                key={ollamaDescription}
+                                words={[ollamaDescription || "Llama Ürünü Analiz Ediliyor..."]}
+                                cursor
+                                cursorStyle="_"
+                                typeSpeed={10}
+                                deleteSpeed={0}
+                                delaySpeed={1000}
+                                loop={1}
+                              />
+                            }
+                          </div>
+
+                          <span className="mtext-106 cl2 mt-5">
                             {selectedProduct.unitPrice} TL
                           </span>
                         </div>
@@ -284,12 +337,7 @@ const Products = () => {
                               </div>
                             </div>
                           </div> */}
-                          <div>
-                            {ollamaDescription && (
-                                // <Typewriter text={ollamaDescription} />
-                                <p>{ollamaDescription}</p>
-                            )}
-                          </div>
+                          
 
                           <div className="flex-w flex-r-m p-b-10">
                             <div className="size-204 flex-w flex-m respon6-next">
@@ -319,6 +367,7 @@ const Products = () => {
 
                               <button 
                                 className="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
+                                style={{ marginLeft: '30px', width: '114px' }}
                                 onClick={() => {
                                   if (selectedProduct) {
                                     addToCard({
@@ -328,7 +377,7 @@ const Products = () => {
                                   }
                                 }}
                               >
-                                Ürünü Sepete Ekle
+                                Sepete Ekle
                               </button>
                             </div>
                           </div>	
